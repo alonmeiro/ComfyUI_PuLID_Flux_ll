@@ -227,6 +227,11 @@ class ApplyPulidFlux:
             },
             "optional": {
                 "attn_mask": ("MASK", ),
+                "guidance_scale": ("FLOAT", {"default": 3.5, "min": 0.0, "max": 20.0, "step": 0.5 }),
+                "base_ratio": ("FLOAT", {"default": 0.1, "min": 0.0, "max": 1.0, "step": 0.05 }), 
+                "mask_inject_steps": ("INT", {"default": 8, "min": 0, "max": 50, "step": 1 }), 
+                "double_inject_blocks_interval": ("INT", {"default": 1, "min": 1, "max": 10, "step": 1 }), 
+                "single_inject_blocks_interval": ("INT", {"default": 2, "min": 1, "max": 10, "step": 1 }),
                 "options": ("OPTIONS",),
             },
             "hidden": {
@@ -238,7 +243,7 @@ class ApplyPulidFlux:
     FUNCTION = "apply_pulid_flux"
     CATEGORY = "pulid"
 
-    def apply_pulid_flux(self, model, pulid_flux, eva_clip, face_analysis, image, weight, start_at, end_at, attn_mask=None, options={}, unique_id=None):
+    def apply_pulid_flux(self, model, pulid_flux, eva_clip, face_analysis, image, weight, start_at, end_at, attn_mask=None, guidance_scale=3.5, base_ratio=0.1, mask_inject_steps=8, double_inject_blocks_interval=1, single_inject_blocks_interval=2, options={}, unique_id=None):
         model = model.clone()
 
         device = comfy.model_management.get_torch_device()
@@ -370,7 +375,12 @@ class ApplyPulidFlux:
             "embedding": cond,
             "sigma_start": sigma_start,
             "sigma_end": sigma_end,
-            "mask": attn_mask
+            "mask": attn_mask,
+            "guidance_scale": guidance_scale,
+            "base_ratio": base_ratio, 
+            "mask_inject_steps": mask_inject_steps,
+            "double_inject_blocks_interval": double_inject_blocks_interval,
+            "single_inject_blocks_interval": single_inject_blocks_interval
         }
 
         ca_idx = 0
@@ -657,7 +667,7 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "PulidFluxModelLoader": "Load PuLID Flux Model",
     "PulidFluxInsightFaceLoader": "Load InsightFace (PuLID Flux)",
     "PulidFluxEvaClipLoader": "Load Eva Clip (PuLID Flux)",
-    "ApplyPulidFlux": "Apply PuLID Flux",
+    "ApplyPulidFlux": "Apply PuLID Flux Alon",
     "FixPulidFluxPatch": "Fix PuLID Flux Patch",
     "PulidFluxOptions": "Pulid Flux Options",
     "PulidFluxFaceDetector": "Pulid Flux Face Detector",
