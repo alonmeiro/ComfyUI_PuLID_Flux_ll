@@ -667,7 +667,7 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "PulidFluxModelLoader": "Load PuLID Flux Model",
     "PulidFluxInsightFaceLoader": "Load InsightFace (PuLID Flux)",
     "PulidFluxEvaClipLoader": "Load Eva Clip (PuLID Flux)",
-    "ApplyPulidFlux": "Apply PuLID Flux Alon",
+    "ApplyPulidFlux": "Apply PuLID Flux H1",
     "FixPulidFluxPatch": "Fix PuLID Flux Patch",
     "PulidFluxOptions": "Pulid Flux Options",
     "PulidFluxFaceDetector": "Pulid Flux Face Detector",
